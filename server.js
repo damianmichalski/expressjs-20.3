@@ -15,12 +15,15 @@ app.get('/getNote', function(req, res){
   });
 });
 
-app.post('/updateNote/:note', function(req, res) {
+app.post('/updateNote/:note', function (req, res) {
+  if (stringifyFile === 'undefined') {
+    res.redirect('/getNote');
+  }
+  stringifyFile = req.params.note;
   fs.writeFile('./test.json', stringifyFile, function(err) {
     if (err) throw err;
-    stringifyFile = req.params.note;
-    res.send(stringifyFile);
-    console.log('file updated: ' + stringifyFile);
+    console.log('file updated');
+    res.send('File updated: ' + stringifyFile);
   });
 });
 
